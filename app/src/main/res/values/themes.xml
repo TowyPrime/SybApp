@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SybApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Color principal (afecta ActionBar) -->
+        <item name="colorPrimary">#2414C9</item>
+        <!-- Color del texto en la ActionBar -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+    </style>
+
+    <style name="Theme.SybApp" parent="Base.Theme.SybApp" />
+</resources>

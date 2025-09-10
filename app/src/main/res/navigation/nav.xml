@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/page_ventas">
+
+    <fragment
+        android:id="@+id/page_productos"
+        android:name="com.example.sybapp.views.productos.ProductosFragment"
+        tools:layout="@layout/fragment_productos"
+        />
+
+    <fragment
+        android:id="@+id/page_provedores"
+        android:name="com.example.sybapp.views.provedores.ProvedoresFragment"
+        tools:layout="@layout/fragment_provedores"
+        />
+
+    <fragment
+        android:id="@+id/page_ventas"
+        android:name="com.example.sybapp.views.ventas.VentasFragment"
+        tools:layout="@layout/fragment_ventas"
+        />
+
+    <fragment
+        android:id="@+id/page_reportes"
+        android:name="com.example.sybapp.views.reportes.ReportesFragment"
+        tools:layout="@layout/fragment_reportes"
+        />
+
+</navigation>
