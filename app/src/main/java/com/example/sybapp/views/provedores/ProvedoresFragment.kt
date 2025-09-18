@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.Fragment
@@ -50,6 +52,22 @@ class ProvedoresFragment : Fragment(R.layout.fragment_provedores), ProveedorAdap
         binding.ibtnAgregar.setOnClickListener {
             alertDialogAddUpdate("add")
         }
+
+        binding.etBusqueda.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0.isNullOrEmpty()){
+                    viewModel.getProveedores()
+                }else{
+                    viewModel.filtrarListaProveedores(p0.toString().trim())
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        })
     }
 
 
@@ -59,14 +77,21 @@ class ProvedoresFragment : Fragment(R.layout.fragment_provedores), ProveedorAdap
         binding.rvProveedores.adapter = adapter
     }
 
-    private fun alertDialogAddUpdate(accion:String){
+    private fun alertDialogAddUpdate(
+        accion:String,
+        nomProveedor: String = "",
+        telefono:String = "",
+        email: String = ""
+    ){
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
 
         val vista = inflater.inflate(R.layout.alert_dialog_proveedor,null)
 
         if (accion == "add"){
-            builder.setTitle("Agregar proveedor")
+            builder.setTitle("Agregar Proveedor")
+        }else{
+            builder.setTitle("Editar Proveedor")
         }
 
         val etNomProveedor: EditText = vista.findViewById(R.id.etNomProveedor)
@@ -75,6 +100,13 @@ class ProvedoresFragment : Fragment(R.layout.fragment_provedores), ProveedorAdap
 
         builder.setView(vista)
         builder.setCancelable(false)
+
+        if (accion =="update"){
+            etNomProveedor.setText(nomProveedor)
+            etNomProveedor.isEnabled= false
+            etTelefono.setText(telefono)
+            etEmail.setText(email)
+        }
 
         builder.setPositiveButton("ACEPTAR"){_, _ ->
             viewModel.validarCampos(accion,
@@ -119,6 +151,6 @@ class ProvedoresFragment : Fragment(R.layout.fragment_provedores), ProveedorAdap
     }
 
     override fun editarProveedor(prov: Proveedor) {
-        TODO("Not yet implemented")
+       alertDialogAddUpdate("update",prov.nomProveedor,prov.telefono,prov.email)
     }
 }
